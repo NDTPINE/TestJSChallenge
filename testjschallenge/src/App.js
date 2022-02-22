@@ -1,80 +1,88 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import './App.css';
-import axios from "axios";
+import {FcLike} from 'react-icons/fc';
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import {BsFillSuitHeartFill} from 'react-icons/bs';
+import {BiMessageRoundedError} from 'react-icons/bi'
 
 
-class App extends React.Component {
+function App() {
+  const [users, setUsers] = useState([]);
+  const [likedUser, setLikeUser] = useState([]);
+  const [passUser, setPassUser] = useState([]);
+  const [userProfile, setUserProfile] = useState({});
+  const [userFull, setUserFull] = useState([]);
+  const [matchesUser,setMatchesUser] = useState([]);
 
-	// Constructor
-	constructor() {
-		super();
-    
-		this.state = {
-			usersData: [],
-      total: 0,
-      page: 0,
-      limit:0,
-      userProfile:{}
-		}
-	}
-  
-	componentDidMount() {
+
+	const getListUser = () =>{
 		fetch("https://dummyapi.io/data/v1/user?limit=50",{
       headers:{
         "app-id":"62138e250a7852003c143087"}
       })
 			.then((res) => res.json())
 			.then((json) => {
-				this.setState({usersData:json.data,total:json.total,page:json.page, limit:json.limit});
-			})
+				setUsers(json.data);
+        console.log(users)
+			});
 	}
 
-  GetFullUserProfile(id){
+  const getUserProfileById = (id) =>{
     var url="https://dummyapi.io/data/v1/user/"+id.toString();
-    const fecthData = () =>{
-      axios.get(url,{headers: {
+    fetch(url,{headers: {
         "app-id":"62138e250a7852003c143087"}
       })
-      .then ((res)=> {
-        this.setState({userProfile:res.data});
-        console.log(res.data)
+      .then ((res)=> res.json())
+      .then ((json) =>
+       {
+        setUserProfile(json)
+        console.log(userProfile)
       })
       .catch((error) => console.log(error));
     }
-    return (
-      <label>{this.userProfile.id}</label>
-    )   
-    }
-
-  ShowImage(str){
-    return (
-      <img s
-      src= {str}
-      alt="new"
-      />
-    );
+  const getUserFull = () => {
+    getListUser();
+    users.map((us) => {
+        getUserProfileById(us.id);
+        userFull.push(userProfile);
+        console.log(userFull);
+    });
   }
 
-  renderUsers = () => { 
-    let fullUser = this.state.users.map((d)=>
-    <div>
-        <p>{this.ShowImage(d.picture)}</p>
-        <p>{d.id}</p>
-        <p>{this.GetFullUserProfile(d.id)}</p>
-    </div>
-    ); 
-    return fullUser; 
+  const matcheUser = () => {
+      console.log("matcheUser")
+  }
+  // Add user to 
+  const handlePassUser = () => {
+      console.log("passUser");
   }
 
-
-	render() {
-		return (
+  const handleLikedUser = () => {
+      console.log("likedUser");
+  }
+  
+	
+return (
     <div className="App">
-        {this.renderUsers}
+      <div>
+        <img src="#" alt="new"></img>    
+      </div>
+      <div>
+        <label>Name and Age</label>
+        <div>
+        <button onClick={() => {handlePassUser()}}><AiOutlineCloseCircle/></button>
+        <button onClick={() => {handleLikedUser()}}><BsFillSuitHeartFill/></button>
+        </div>
+      </div>
+      <div>
+        <button><FcLike/> Liked</button>
+        <button><BsFillSuitHeartFill/> Discover</button>
+        <button><BiMessageRoundedError/> Matches</button>
+      </div>
     </div>
 	);
 }
-}
+
 
 
 export default App;
