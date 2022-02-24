@@ -5,7 +5,7 @@ import {BsFillSuitHeartFill} from 'react-icons/bs';
 
 
 function SimpleSlider({listUser}) {
-    const [userFull, setUserFull] = useState([]);
+    
     const d = new Date().getFullYear();
     var settings = {
       dots: false,
@@ -15,36 +15,25 @@ function SimpleSlider({listUser}) {
       slidesToScroll: 1
       
     };
-    const getUserProfileById = () =>{
-      listUser.map((us) =>{
-        var url="https://dummyapi.io/data/v1/user/"+us.id.toString();
-        fetch(url,{headers: {
-            "app-id":"62138e250a7852003c143087"}
-          })
-          .then ((res)=> res.json())
-          .then ((json) =>
-           {
-             userFull.push(json);
-             setUserFull(userFull);
-          })
-          .catch((error) => console.log(error));
-      }
-      )
+    const handleLike = () =>{
+      console.log("Click like");
     }
 
+    const handlePass = () =>{
+      console.log("Click pass User");
+    }
     return (
       <Slider {...settings} >
-        {getUserProfileById()}
-         {userFull.map((pic) => {
+         {listUser.map((pic) => {
            return(
-             <div >
+             <div key={pic.id}>
               <img src={pic.picture} alt="new" width="25%" />
               
               <label>{pic.firstName} {pic.lastName}, {d - new Date(pic.dateOfBirth).getFullYear()}</label>
               
               <div>
-                <button ><AiOutlineCloseCircle/></button>
-                <button ><BsFillSuitHeartFill/></button>
+                <button type="button" onClick={() => handlePass()}><AiOutlineCloseCircle/></button>
+                <button type="button" onClick={() => handleLike()}><BsFillSuitHeartFill/></button>
               </div>
              </div>
             

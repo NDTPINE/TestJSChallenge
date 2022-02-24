@@ -17,18 +17,38 @@ function App() {
   const [userFull, setUserFull] = useState([]);
   const [matchesUser,setMatchesUser] = useState([]);
 
+  useEffect(() =>{
+    const fetchUsers = () =>{
+      try{
+        const res = fetch("https://dummyapi.io/data/v1/user?limit=50",{
+          headers:{
+            "app-id":"62138e250a7852003c143087"}
+          })
+          .then((resp) => resp.json())
+          .then((data) =>{
+            data.data.map((us) =>{
+              const url="https://dummyapi.io/data/v1/user/"+us.id.toString();
+              fetch(url,{headers: {
+              "app-id":"62138e250a7852003c143087"}
+              })
+              .then ((response) => response.json())
+              .then ((json) => {
+                users.push(json);
+                setUsers(users);
+                
+              })
+            })
+          }) 
+          console.log(users);         
+      }
+      catch(err){
+        console.log(err.stack);
+      }
+    }
+    (() => fetchUsers())();
+  }, [users])
 
-	const getListUser = () =>{
-		fetch("https://dummyapi.io/data/v1/user?limit=50",{
-      headers:{
-        "app-id":"62138e250a7852003c143087"}
-      })
-			.then((res) => res.json())
-			.then((json) => {
-				setUsers(json.data);
-        
-			});
-	}
+	
 
   
   const matcheUser = () => {
@@ -49,7 +69,6 @@ return (
       
       
       <div>
-      {getListUser()}
       <SimpleSlider listUser = {users} />
         
       </div>
