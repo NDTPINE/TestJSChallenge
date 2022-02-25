@@ -1,26 +1,38 @@
 import React,{useState,useEffect} from "react";
 import './App.css';
-import {FcLike} from 'react-icons/fc';
-import { AiOutlineCloseCircle } from "react-icons/ai";
 import {BsFillSuitHeartFill} from 'react-icons/bs';
 import {BiMessageRoundedError} from 'react-icons/bi'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SimpleSlider from "./SimpleSlider";
+import {BrowserRouter,Link, Route, Routes} from 'react-router-dom';
+import Discover from "./Discover";
+import Liked from "./Liked";
+import Matches from "./Matches";
+
 
 
 function App() {
-  const [users, setUsers] = useState([]);
+  const [listUsers, setListUsers] = useState([]);
   const [likedUser, setLikeUser] = useState([]);
-  const [passUser, setPassUser] = useState([]);
-  const [userProfile, setUserProfile] = useState({});
-  const [userFull, setUserFull] = useState([]);
-  const [matchesUser,setMatchesUser] = useState([]);
+  const [passUser,setPassUser] = useState([]);
 
+  const API_URL = "http://localhost:3001/data";
   useEffect(() =>{
-    const fetchUsers = () =>{
-      try{
-        const res = fetch("https://dummyapi.io/data/v1/user?limit=50",{
+    const fetchUsers = async () =>{
+       //Fetch data database (json)
+         try{
+           const res = await fetch(API_URL);
+           if (!res.ok) throw Error('Can not load database from server')
+           const listUser = await res.json();
+           setListUsers(listUser);
+         }
+         catch (err){
+           console.log(err.stack);
+         }
+      //Fetch data from https://dummyapi.io
+     /* try{
+        const res = fetch("https://dummyapi.io/data/v1/user?limit=20",{
           headers:{
             "app-id":"62138e250a7852003c143087"}
           })
@@ -33,49 +45,61 @@ function App() {
               })
               .then ((response) => response.json())
               .then ((json) => {
-                users.push(json);
-                setUsers(users);
-                
+                listUsers.push(json);
+                setUsers(listUsers);
               })
             })
           }) 
-          console.log(users);         
+          console.log(listUsers);         
       }
       catch(err){
         console.log(err.stack);
-      }
+      } */
     }
-    (() => fetchUsers())();
-  }, [users])
-
-	
-
+    (async () =>await fetchUsers())();
+  }, [])
   
-  const matcheUser = () => {
-      console.log("matcheUser")
-  }
-  // Add user to 
-  const handlePassUser = () => {
-      console.log("passUser");
-  }
-
-  const handleLikedUser = () => {
-      console.log("likedUser");
-  }
   
-	
 return (
     <div className="App">
-      
-      
-      <div>
-      <SimpleSlider listUser = {users} />
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={
+          <SimpleSlider 
+          listUser = {listUsers} 
+            likedUser = {likedUser}
+            setLikeUser = {setLikeUser}
+            passUser={passUser}
+            setPassUser={setPassUser}
+          />
+        }/> 
+        <Route path="/discover" element={
+          <Discover listUser = {listUsers} 
+           likedUser = {likedUser}
+           setLikeUser = {setLikeUser}
+           passUser={passUser}
+           setPassUser={setPassUser}
+          />
+        }/>
+        <Route path="/like" element={
+          <Liked 
+          listUser ={listUsers}
+          />
+        }/>
+        <Route path="/matches" element={
+          <Matches />
+        }/>
+            
+      </Routes>
+      </BrowserRouter>
+      <div className="btn">
+        <button className="buttonLDM" ><BsFillSuitHeartFill/> Liked</button>
         
-      </div>
-      <div>
-        <button><FcLike/> Liked</button>
-        <button ><BsFillSuitHeartFill/> Discover</button>
-        <button><BiMessageRoundedError/> Matches</button>
+        <Link to="/">
+            <button className="buttonLDM" ><BsFillSuitHeartFill/> Discover</button>
+        </Link>
+
+        <button className="buttonLDM" ><BiMessageRoundedError/> Matches</button>
       </div>
     </div>
 	);
