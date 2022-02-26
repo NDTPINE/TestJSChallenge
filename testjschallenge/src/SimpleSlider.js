@@ -2,7 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import {BsFillSuitHeartFill} from 'react-icons/bs';
-
+import addUser from "./addUser";
 
 function SimpleSlider({listUser, likedUser, setLikeUser,passUser, setPassUser}) {
 
@@ -34,8 +34,8 @@ function SimpleSlider({listUser, likedUser, setLikeUser,passUser, setPassUser}) 
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
-      nextArrow: <SampleNextArrow />,
       prevArrow: <SamplePrevArrow />,
+      nextArrow: <SampleNextArrow />,
       autoplay: true,
       autoplaySpeed: 2000,
       cssEase: "linear"
@@ -43,16 +43,21 @@ function SimpleSlider({listUser, likedUser, setLikeUser,passUser, setPassUser}) 
     };
     const handleLike = (users) =>{
       const tempUser = likedUser.includes(users);
-      if (!tempUser){ likedUser.push(users)} 
+      if (!tempUser){ 
+        likedUser.push(users);
+        addUser(users,'http://localhost:3001/like');
+      }
       setLikeUser(likedUser);
-      console.log(likedUser);
+      
     }
 
     const handlePass = (users) =>{
       const tempUser = passUser.includes(users);
-      if (!tempUser){ passUser.push(users)} 
-      setLikeUser(passUser);
-      console.log(passUser);
+      if (!tempUser){ 
+        passUser.push(users)
+      setPassUser(passUser);
+      } 
+      addUser(users,'http://localhost:3001/pass');
     }
     return (
       <div>
