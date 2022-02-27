@@ -11,7 +11,7 @@ function SimpleSlider({listUser, likedUser, setLikeUser,passUser, setPassUser}) 
     return (
       <div
         className={className}
-        style={{ ...style, display: "block", background: "red" , width:"5%", height:"5%"}}
+        style={{ ...style, display: "block", background: "red" , width:"7%", height:"5%"}}
         onClick={onClick}
       />
     );
@@ -22,9 +22,9 @@ function SimpleSlider({listUser, likedUser, setLikeUser,passUser, setPassUser}) 
     return (
       <div
         className={className}
-        style={{ ...style, display: "block", background: "green" ,width:"5%"}}
+        style={{ ...style, display: "block", background: "green" ,width:"7%",height:"5%"}}
         onClick={onClick}
-      />
+      ></div>
     );
   }
     const d = new Date().getFullYear();
@@ -34,11 +34,12 @@ function SimpleSlider({listUser, likedUser, setLikeUser,passUser, setPassUser}) 
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
-      prevArrow: <SamplePrevArrow />,
-      nextArrow: <SampleNextArrow />,
+      arrows:true,
       autoplay: true,
-      autoplaySpeed: 2000,
-      cssEase: "linear"
+      autoplaySpeed: 1500,
+      cssEase: "linear",
+      prevArrow:<SamplePrevArrow/>,
+      nextArrow:<SampleNextArrow/>
       
     };
     const handleLike = (users) =>{
@@ -55,13 +56,13 @@ function SimpleSlider({listUser, likedUser, setLikeUser,passUser, setPassUser}) 
       const tempUser = passUser.includes(users);
       if (!tempUser){ 
         passUser.push(users)
-      setPassUser(passUser);
+        addUser(users,'http://localhost:3001/pass');
       } 
-      addUser(users,'http://localhost:3001/pass');
+      setPassUser(passUser);
     }
-    return (
-      <div>
-      <Slider {...settings} >
+    const listImage =() =>{
+      return (
+        <Slider {...settings} >
          {listUser.map((pic) => {
            return(
              <div key={pic.id}>
@@ -72,10 +73,14 @@ function SimpleSlider({listUser, likedUser, setLikeUser,passUser, setPassUser}) 
                 <button className="btnLikePass" type="button" onClick={() => handleLike(pic)}><BsFillSuitHeartFill/></button>
               </div>
              </div>
-            
             )
           })}
       </Slider>
+      )
+    }
+    return (
+      <div>
+      {listImage()}
         </div>
     );
   }

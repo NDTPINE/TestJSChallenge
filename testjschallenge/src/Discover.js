@@ -1,6 +1,6 @@
 import React from 'react'
 import SimpleSlider from "./SimpleSlider";
-import {Link} from 'react-router-dom';
+
 
 const Discover = ({listUsers, likedUser, setLikeUser,passUser, setPassUser}) => {
     return (

@@ -19,6 +19,18 @@ function App() {
   const API_URL_DATA = "http://localhost:3001/data";
   const API_URL_LIKE = "http://localhost:3001/like";
   const API_URL_PASS = "http://localhost:3001/pass";
+
+  function shuffleArray(array) {
+    let i = array.length - 1;
+    for (; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  }
+
   useEffect(() =>{
     const fetchUsers = async () =>{
        //Fetch data database (json)
@@ -26,6 +38,8 @@ function App() {
            const res1 = await fetch(API_URL_DATA);
            if (!res1.ok) throw Error('Can not load database from server')
            const listUser = await res1.json();
+           const randomListUser = shuffleArray(listUser);
+           console.log(randomListUser);
            setListUsers(listUser);
 
            const res2 = await fetch(API_URL_LIKE);
@@ -73,7 +87,11 @@ return (
               setLikedUser ={setLikeUser}
             />
             }/>
-          <Route path="matches" element={<Matches />
+          <Route path="matches" element={
+            <Matches 
+              passUser={passUser}
+              setPassUser={setPassUser} 
+              />
           }/>
         </Route>
       </Routes>

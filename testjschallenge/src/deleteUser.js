@@ -1,12 +1,8 @@
 import apiRequest from "./apiRequest";
 
-const deleteUser = async (likedUser, urlLiPa) => {
+const deleteUser = async ( urlLiPa) => {
     const postOptions = {
-        method:'DELETE',
-        headers:{
-            'Content-Type':'application/json'
-        },
-        body: JSON.stringify(likedUser)
+        method:'DELETE'
     }
     
     apiRequest(urlLiPa, postOptions);
