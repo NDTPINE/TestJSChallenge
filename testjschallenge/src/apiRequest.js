@@ -4,7 +4,6 @@ const apiRequest = async(url ='', optionsObj = null, errMsg = null) =>{
         .then((res) =>res.json())
         .then(res=>{console.log('Response: ', res)});
         if (!res.ok) throw Error("Please reload the website!!!");
-
     }
     catch(err){
         errMsg = err.message;

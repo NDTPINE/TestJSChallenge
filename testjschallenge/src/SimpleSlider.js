@@ -44,12 +44,12 @@ function SimpleSlider({listUser, likedUser, setLikeUser,passUser, setPassUser}) 
     };
     const handleLike = (users) =>{
       const tempUser = likedUser.includes(users);
-      if (!tempUser){ 
+      
+      if (!tempUser) { 
         likedUser.push(users);
         addUser(users,'http://localhost:3001/like');
       }
       setLikeUser(likedUser);
-      
     }
 
     const handlePass = (users) =>{
