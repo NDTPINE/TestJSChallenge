@@ -51,8 +51,6 @@ function App() {
              setListUsers(listUsers);
             });
 
-           
-
            const res2 = await fetch(API_URL_LIKE);
            if (!res2.ok) throw Error('Can not load database like user from server')
            const listLikeUser = await res2.json();
@@ -72,7 +70,6 @@ function App() {
     },2000);
   }, [])
 
-  
   
 return (
       <div>
