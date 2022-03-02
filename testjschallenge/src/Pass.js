@@ -4,7 +4,7 @@ import { AiFillDelete } from 'react-icons/ai';
 import deleteUser from './deleteUser'
 
 
-const Matches = ({passUser,setPassUser}) => {
+const Pass = ({passUser,setPassUser}) => {
     const d = new Date().getFullYear();
     const handleDelete =(us,e)=>{
         e.preventDefault();
@@ -30,4 +30,4 @@ const Matches = ({passUser,setPassUser}) => {
     )
 }
 
-export default Matches
+export default Pass

@@ -6,7 +6,7 @@ import SimpleSlider from "./SimpleSlider";
 import { Route, Routes} from 'react-router-dom';
 import Discover from "./Discover";
 import Liked from "./Liked";
-import Matches from "./Matches";
+import Pass from "./Pass";
 import Layout from "./Layout";
 
 
@@ -61,7 +61,7 @@ function App() {
            const listPassUser = await res3.json();
            setPassUser(listPassUser);
 
-           
+
          }
          catch (err){
            console.log(err.stack);
@@ -98,8 +98,8 @@ return (
               setLikedUser ={setLikeUser}
             />
             }/>
-          <Route path="matches" element={
-            <Matches 
+          <Route path="pass" element={
+            <Pass 
               passUser={passUser}
               setPassUser={setPassUser} 
               />

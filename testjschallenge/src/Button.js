@@ -9,7 +9,7 @@ const Button = () => {
         <div className="btn">
         <NavLink to="/liked" role="button" className="buttonLDM" ><BsFillSuitHeartFill/> Liked</NavLink>
         <NavLink to="/" role ="button" className="buttonLDM" ><BsFillSuitHeartFill/> Discover</NavLink>
-        <NavLink to="/matches" role="button" className="buttonLDM" ><BiMessageRoundedError/> Matches</NavLink> 
+        <NavLink to="/pass" role="button" className="buttonLDM" ><BiMessageRoundedError/> Pass</NavLink> 
       </div>
     )
 }
