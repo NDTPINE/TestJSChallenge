@@ -14,8 +14,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 ### `npm run seed`
 
-Open [http://localhost:3001](http://localhost:3001) to view data in your browser.
+Open [http://localhost:3001/data](http://localhost:3001/data) or [http://localhost:3001/like](http://localhost:3001/like) to view data in your browser.
 
-### `npm run deploy`
+
 
 
