@@ -10,13 +10,12 @@ import Matches from "./Matches";
 import Layout from "./Layout";
 
 
-
 function App() {
   const [listUsers, setListUsers] = useState([]);
   const [likedUser, setLikeUser] = useState([]);
   const [passUser,setPassUser] = useState([]);
 
-  const API_URL_DATA = "http://localhost:3001/data";
+  const API_URL_DATA = "https://dummyapi.io/data/v1/user?limit=10";
   const API_URL_LIKE = "http://localhost:3001/like";
   const API_URL_PASS = "http://localhost:3001/pass";
 
@@ -35,7 +34,9 @@ function App() {
     const fetchUsers = async () =>{
        //Fetch data database (json)
          try{
-           const res1 = await fetch(API_URL_DATA);
+           const res1 = await fetch(API_URL_DATA, {
+             hearders: "62138e250a7852003c143087"
+           });
            if (!res1.ok) throw Error('Can not load database from server')
            const listUser = await res1.json();
            const randomListUser = shuffleArray(listUser);
